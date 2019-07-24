@@ -331,18 +331,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../faust.md" title="Faust integration" class="md-nav__link">
-      Faust integration
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
     <a href="../client/" title="SchemaRegistryClient Api" class="md-nav__link">
       SchemaRegistryClient Api
     </a>
@@ -483,7 +471,7 @@
     <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">message_encoded</span> <span class="o">=</span> <span class="n">async</span> <span class="n">message_serializer</span><span class="o">.</span><span class="n">encode_record_with_schema</span><span class="p">(</span>
+<span class="n">message_encoded</span> <span class="o">=</span> <span class="n">await</span> <span class="n">message_serializer</span><span class="o">.</span><span class="n">encode_record_with_schema</span><span class="p">(</span>
     <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">avro_user_schema</span><span class="p">,</span> <span class="n">user_record</span><span class="p">)</span>
 
 <span class="c1"># this is because the message encoded reserved 5 bytes for the schema_id</span>
@@ -491,7 +479,7 @@
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message_encoded</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
 
 <span class="c1"># now decode the message</span>
-<span class="n">message_decoded</span> <span class="o">=</span> <span class="n">async</span> <span class="n">message_serializer</span><span class="o">.</span><span class="n">decode_message</span><span class="p">(</span><span class="n">message_encoded</span><span class="p">)</span>
+<span class="n">message_decoded</span> <span class="o">=</span> <span class="n">await</span> <span class="n">message_serializer</span><span class="o">.</span><span class="n">decode_message</span><span class="p">(</span><span class="n">message_encoded</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">message_decoded</span> <span class="o">==</span> <span class="n">user_record</span>
 
 <span class="c1"># Now if we send a bad record</span>
@@ -501,7 +489,7 @@
     <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="s2">&quot;my_age&quot;</span>
 <span class="p">}</span>
 
-<span class="n">async</span> <span class="n">message_serializer</span><span class="o">.</span><span class="n">encode_record_with_schema</span><span class="p">(</span>
+<span class="n">await</span> <span class="n">message_serializer</span><span class="o">.</span><span class="n">encode_record_with_schema</span><span class="p">(</span>
     <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">avro_user_schema</span><span class="p">,</span> <span class="n">bad_record</span><span class="p">)</span>
 <span class="c1"># results in an error:</span>
 <span class="c1">#   TypeError: unsupported operand type(s) for &lt;&lt;: &#39;str&#39; and &#39;int&#39;</span>
