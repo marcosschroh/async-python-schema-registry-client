@@ -1,4 +1,4 @@
-# Python Rest Client Schema Registry
+# Async Python Rest Client Schema Registry
 
 [![Build Status](https://travis-ci.org/marcosschroh/async-python-schema-registry-client.svg?branch=master)](https://travis-ci.com/marcosschroh/async-python-schema-registry-client.svg?branch=master)
 [![GitHub license](https://img.shields.io/github/license/marcosschroh/async-python-schema-registry-client.svg)](https://github.com/marcosschroh/async-python-schema-registry-client/blob/master/LICENSE)
@@ -6,7 +6,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)
 
 
-Python Rest Client to interact against [schema-registry](https://docs.confluent.io/current/schema-registry/index.html) confluent server to manage [Avro Schemas](https://docs.oracle.com/database/nosql-12.1.3.1/GettingStartedGuide/avroschemas.html) resources.
+Async Python Rest Client to interact against [schema-registry](https://docs.confluent.io/current/schema-registry/index.html) confluent server to manage [Avro Schemas](https://docs.oracle.com/database/nosql-12.1.3.1/GettingStartedGuide/avroschemas.html) resources.
 
 
 ## Requirements
@@ -16,7 +16,7 @@ python 3.6+, fastavro>=0.22.3, requests-async>=0.4.1, aiofiles>=0.4.0
 ## Installation
 
 ```bash
-pip install python-schema-registry-client
+pip install async-python-schema-registry-client
 ```
 
 ## When use this library?

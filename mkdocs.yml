@@ -1,11 +1,11 @@
-site_name: Python Schema Registry Client
-site_description: avro, kafka, client, faust, schema
+site_name: Async Python Schema Registry Client
+site_description: python, async, avro, kafka, client, schema
 
 theme:
     name: 'material'
 
-repo_name: marcosschroh/python-schema-registry-client
-repo_url: https://github.com/marcosschroh/python-schema-registry-client
+repo_name: marcosschroh/async-python-schema-registry-client
+repo_url: https://github.com/marcosschroh/async-python-schema-registry-client
 
 nav:
     - Introduction: 'index.md'
