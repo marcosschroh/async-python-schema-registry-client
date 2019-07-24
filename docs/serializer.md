@@ -34,7 +34,7 @@ user_record = {
     "age": 20,
 }
 
-message_encoded = async message_serializer.encode_record_with_schema(
+message_encoded = await message_serializer.encode_record_with_schema(
     "user", avro_user_schema, user_record)
 
 # this is because the message encoded reserved 5 bytes for the schema_id
@@ -42,7 +42,7 @@ assert len(message_encoded) > 5
 assert isinstance(message_encoded, bytes)
 
 # now decode the message
-message_decoded = async message_serializer.decode_message(message_encoded)
+message_decoded = await message_serializer.decode_message(message_encoded)
 assert message_decoded == user_record
 
 # Now if we send a bad record
@@ -52,7 +52,7 @@ bad_record = {
     "age": "my_age"
 }
 
-async message_serializer.encode_record_with_schema(
+await message_serializer.encode_record_with_schema(
     "user", avro_user_schema, bad_record)
 # results in an error:
 #   TypeError: unsupported operand type(s) for <<: 'str' and 'int'
