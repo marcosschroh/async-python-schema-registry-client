@@ -1,8 +1,8 @@
 # Async Python Rest Client Schema Registry
 
-[![Build Status](https://travis-ci.org/marcosschroh/python-schema-registry-client.svg?branch=master)](https://travis-ci.org/marcosschroh/python-schema-registry-client)
-[![GitHub license](https://img.shields.io/github/license/marcosschroh/python-schema-registry-client.svg)](https://github.com/marcosschroh/python-schema-registry-client/blob/master/LICENSE)
-[![codecov](https://codecov.io/gh/marcosschroh/python-schema-registry-client/branch/master/graph/badge.svg)](https://codecov.io/gh/marcosschroh/python-schema-registry-client)
+[![Build Status](https://travis-ci.org/marcosschroh/async-python-schema-registry-client.svg?branch=master)](https://travis-ci.com/marcosschroh/async-python-schema-registry-client.svg?branch=master)
+[![GitHub license](https://img.shields.io/github/license/marcosschroh/async-python-schema-registry-client.svg)](https://github.com/marcosschroh/async-python-schema-registry-client/blob/master/LICENSE)
+[![codecov](https://codecov.io/gh/marcosschroh/async-python-schema-registry-client/branch/master/graph/badge.svg)](https://codecov.io/gh/marcosschroh/async-python-schema-registry-client)
 [![Python Version](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)
 
 
