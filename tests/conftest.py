@@ -53,7 +53,6 @@ class Response:
 
 
 class AsyncMock:
-
     def __init__(self, module, func, returned_value=None):
         self.module = module
         self.func = func

@@ -59,8 +59,9 @@ async def test_override_headers(client, deployment_schema, response_klass, async
     override_header = {"custom-serialization": "application/avro"}
 
     mock = async_mock(
-        requests.sessions.Session, "request",
-        returned_value=response_klass(200, content={"id": 1})
+        requests.sessions.Session,
+        "request",
+        returned_value=response_klass(200, content={"id": 1}),
     )
 
     with mock:

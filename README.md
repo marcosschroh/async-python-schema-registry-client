@@ -1,4 +1,4 @@
-# Python Rest Client Schema Registry
+# Async Python Rest Client Schema Registry
 
 [![Build Status](https://travis-ci.org/marcosschroh/python-schema-registry-client.svg?branch=master)](https://travis-ci.org/marcosschroh/python-schema-registry-client)
 [![GitHub license](https://img.shields.io/github/license/marcosschroh/python-schema-registry-client.svg)](https://github.com/marcosschroh/python-schema-registry-client/blob/master/LICENSE)
@@ -18,11 +18,9 @@ python 3.6+, fastavro>=0.22.3, requests-async>=0.4.1, aiofiles>=0.4.0
 pip install async-python-schema-registry-client
 ```
 
-
 ## Client API, Serializer, Faust Integration and Schema Server description
 
-
-**Documentation**: [https://marcosschroh.github.io/python-schema-registry-client.io](https://marcosschroh.github.io/python-schema-registry-client)
+**Documentation**: [https://marcosschroh.github.io/async-python-schema-registry-client.io](https://marcosschroh.github.io/async-python-schema-registry-client)
 
 ## When use this library?
 

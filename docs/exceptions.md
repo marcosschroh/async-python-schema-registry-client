@@ -25,7 +25,7 @@ For example:
 try:
     # Try to get the compatibility level of a subject that does not exist
     # The Schema Registry Server returns 404
-    compatibility = client.get_compatibility("subject-does-not-exists")
+    compatibility = async client.get_compatibility("subject-does-not-exists")
 except Exception as error:
     # Print 404
     print(error.http_code)

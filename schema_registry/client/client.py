@@ -72,7 +72,7 @@ class SchemaRegistryClient:
 
     def _create_session(self, conf: dict) -> requests.Session:
         session = requests.Session()
-        session.verify = conf.pop('ssl.ca.location', None)
+        session.verify = conf.pop("ssl.ca.location", None)
         session.cert = self._configure_client_tls(conf)
         session.auth = self._configure_basic_auth(conf)
 
@@ -200,7 +200,9 @@ class SchemaRegistryClient:
         url, method = self.url_manager.url_for("register", subject=subject)
         body = {"schema": json.dumps(avro_schema.schema)}
 
-        result, code = await self.request(url, method=method, body=body, headers=headers)
+        result, code = await self.request(
+            url, method=method, body=body, headers=headers
+        )
 
         msg = None
         if code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN):
@@ -461,7 +463,9 @@ class SchemaRegistryClient:
         url, method = self.url_manager.url_for("check_version", subject=subject)
         body = {"schema": json.dumps(avro_schema.schema)}
 
-        result, code = await self.request(url, method=method, body=body, headers=headers)
+        result, code = await self.request(
+            url, method=method, body=body, headers=headers
+        )
         if code == status.HTTP_404_NOT_FOUND:
             logger.error(f"Not found: {code}")
             return None
@@ -502,7 +506,9 @@ class SchemaRegistryClient:
             "test_compatibility", subject=subject, version=version
         )
         body = {"schema": json.dumps(avro_schema.schema)}
-        result, code = await self.request(url, method=method, body=body, headers=headers)
+        result, code = await self.request(
+            url, method=method, body=body, headers=headers
+        )
 
         if code == status.HTTP_404_NOT_FOUND:
             logger.error(f"Subject or version not found: {code}")
@@ -543,7 +549,9 @@ class SchemaRegistryClient:
         url, method = self.url_manager.url_for("update_compatibility", subject=subject)
         body = {"compatibility": level}
 
-        result, code = await self.request(url, method=method, body=body, headers=headers)
+        result, code = await self.request(
+            url, method=method, body=body, headers=headers
+        )
 
         print(result, code)
 

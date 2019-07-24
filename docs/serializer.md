@@ -34,7 +34,7 @@ user_record = {
     "age": 20,
 }
 
-message_encoded = message_serializer.encode_record_with_schema(
+message_encoded = async message_serializer.encode_record_with_schema(
     "user", avro_user_schema, user_record)
 
 # this is because the message encoded reserved 5 bytes for the schema_id
@@ -42,7 +42,7 @@ assert len(message_encoded) > 5
 assert isinstance(message_encoded, bytes)
 
 # now decode the message
-message_decoded = message_serializer.decode_message(message_encoded)
+message_decoded = async message_serializer.decode_message(message_encoded)
 assert message_decoded == user_record
 
 # Now if we send a bad record
@@ -52,7 +52,7 @@ bad_record = {
     "age": "my_age"
 }
 
-message_serializer.encode_record_with_schema(
+async message_serializer.encode_record_with_schema(
     "user", avro_user_schema, bad_record)
 # results in an error:
 #   TypeError: unsupported operand type(s) for <<: 'str' and 'int'
@@ -70,7 +70,7 @@ MessageSerializer
 #### Encode record with a `Schema`:
 
 ```python
-def encode_record_with_schema(subject, schema, record, is_key=False):
+async def encode_record_with_schema(subject, schema, record, is_key=False):
     """
     Args:
         subject (str): Subject name
@@ -86,7 +86,7 @@ def encode_record_with_schema(subject, schema, record, is_key=False):
 #### Encode a record with a `schema id`:
 
 ```python
-def encode_record_with_schema_id(schema_id, record, is_key=False):
+async def encode_record_with_schema_id(schema_id, record, is_key=False):
     """
     Args:
         schema_id (int): integer ID
@@ -101,7 +101,7 @@ def encode_record_with_schema_id(schema_id, record, is_key=False):
 #### Decode a message encoded previously:
 
 ```python
-def decode_message(message, is_key=False):
+async def decode_message(message, is_key=False):
     """
     Args:
         message (str|bytes or None): message key or value to be decoded

@@ -30,7 +30,7 @@ Methods:
 Get Schema for a given version. If version is `None`, try to resolve the latest schema
 
 ```python
-def get_schema(subject: str, version="latest", headers: dict = None) -> utils.SchemaVersion:
+async def get_schema(subject: str, version="latest", headers: dict = None) -> utils.SchemaVersion:
     """
     Args:
         subject (str): subject name
@@ -50,7 +50,7 @@ def get_schema(subject: str, version="latest", headers: dict = None) -> utils.Sc
 #### Get schema by `id`:
 
 ```python
-def get_by_id(schema_id: int, headers: dict = None) -> client.schema.AvroSchema:
+async def get_by_id(schema_id: int, headers: dict = None) -> client.schema.AvroSchema:
     """
     Args:
         schema_id (int): Schema Id
@@ -64,7 +64,7 @@ def get_by_id(schema_id: int, headers: dict = None) -> client.schema.AvroSchema:
 #### Register a Schema:
 
 ```python
-def register(subject: str, avro_schema: client.schema.AvroSchema, headers: dict = None) -> int:
+async def register(subject: str, avro_schema: client.schema.AvroSchema, headers: dict = None) -> int:
     """
     Args:
         subject (str): subject name
@@ -79,7 +79,7 @@ def register(subject: str, avro_schema: client.schema.AvroSchema, headers: dict 
 #### Get Subjects
 
 ```python
-def get_subjects(self, headers: dict = None) -> list:
+async def get_subjects(self, headers: dict = None) -> list:
     """
     GET /subjects/(string: subject)
     Get list of all registered subjects in your Schema Registry.
@@ -97,7 +97,7 @@ def get_subjects(self, headers: dict = None) -> list:
 #### Delete Schema
 
 ```python
-def delete_subject(subject: str, headers: dict = None) -> list:
+async def delete_subject(subject: str, headers: dict = None) -> list:
     """
     Args:
         subject (str): subject name
@@ -111,7 +111,7 @@ def delete_subject(subject: str, headers: dict = None) -> list:
 #### Check if a schema has already been registered under the specified subject
 
 ```python
-def check_version(subject: str, avro_schema: client.schema.AvroSchema, headers: dict = None) -> dict:
+async def check_version(subject: str, avro_schema: client.schema.AvroSchema, headers: dict = None) -> dict:
     """
     Args:
         subject (str): subject name
@@ -132,7 +132,7 @@ def check_version(subject: str, avro_schema: client.schema.AvroSchema, headers: 
 #### Get schema version under a specific subject
 
 ```python
-def get_versions(self, subject: str, headers: dict = None) -> list:
+async def get_versions(self, subject: str, headers: dict = None) -> list:
     """
     GET subjects/{subject}/versions
     Get a list of versions registered under the specified subject.
@@ -149,7 +149,7 @@ def get_versions(self, subject: str, headers: dict = None) -> list:
 #### Deletes a specific version of the schema registered under a subject
 
 ```python
-def delete_version(self, subject: str, version="latest", headers: dict = None):
+async def delete_version(self, subject: str, version="latest", headers: dict = None):
     """
     DELETE /subjects/(string: subject)/versions/(versionId: version)
 
@@ -176,7 +176,7 @@ def delete_version(self, subject: str, version="latest", headers: dict = None):
 #### Test Compatibility:
 
 ```python
-def test_compatibility(subject: str, avro_schema: client.schema.AvroSchema, version="latest", headers: dict = None):
+async def test_compatibility(subject: str, avro_schema: client.schema.AvroSchema, version="latest", headers: dict = None):
     """
     By default the latest version is checked against.
 
@@ -193,7 +193,7 @@ def test_compatibility(subject: str, avro_schema: client.schema.AvroSchema, vers
 #### Get Compatibility:
 
 ```python
-def get_compatibility(subject: str, headers: dict = None) -> str:
+async def get_compatibility(subject: str, headers: dict = None) -> str:
     """
     Get the current compatibility level for a subject.  Result will be one of:
 
@@ -214,7 +214,7 @@ def get_compatibility(subject: str, headers: dict = None) -> str:
 #### Update Compatibility:
 
 ```python
-def update_compatibility(level: str, subject: str, headers: dict = None) -> bool:
+async def update_compatibility(level: str, subject: str, headers: dict = None) -> bool:
     """
     Update the compatibility level for a subject.
     If subject is None, the compatibility level is global.
