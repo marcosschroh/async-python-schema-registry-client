@@ -1,0 +1,10 @@
+{
+ "type": "record",
+ "name": "User",
+ "aliases": ["UserKey"],
+ "fields": [
+     {"name": "name", "type": "string"},
+     {"name": "favorite_number",  "type": ["int", "null"], "default": 42},
+     {"name": "favorite_color", "type": ["string", "null"], "default": "purple"}
+ ]
+}

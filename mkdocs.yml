@@ -1,0 +1,23 @@
+site_name: Python Schema Registry Client
+site_description: avro, kafka, client, faust, schema
+
+theme:
+    name: 'material'
+
+repo_name: marcosschroh/python-schema-registry-client
+repo_url: https://github.com/marcosschroh/python-schema-registry-client
+
+nav:
+    - Introduction: 'index.md'
+    - Message Serializer: 'serializer.md'
+    - Faust integration: 'faust.md'
+    - SchemaRegistryClient Api: 'client.md'
+    - Exceptions: 'exceptions.md'
+    - Schema Registry Server: 'schemaregistry_server.md'
+
+markdown_extensions:
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - admonition
+  - codehilite
+  - extra
