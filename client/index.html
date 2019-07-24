@@ -1,0 +1,859 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="avro, kafka, client, faust, schema">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+    
+    
+      
+        <title>SchemaRegistryClient Api - Python Schema Registry Client</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="../#client" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Python Schema Registry Client" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Python Schema Registry Client
+              </span>
+              <span class="md-header-nav__topic">
+                SchemaRegistryClient Api
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/marcosschroh/python-schema-registry-client/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      marcosschroh/python-schema-registry-client
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Python Schema Registry Client" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Python Schema Registry Client
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/marcosschroh/python-schema-registry-client/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      marcosschroh/python-schema-registry-client
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../serializer/" title="Message Serializer" class="md-nav__link">
+      Message Serializer
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../faust.md" title="Faust integration" class="md-nav__link">
+      Faust integration
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        SchemaRegistryClient Api
+      </label>
+    
+    <a href="./" title="SchemaRegistryClient Api" class="md-nav__link md-nav__link--active">
+      SchemaRegistryClient Api
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schemaregistryclient" title="SchemaRegistryClient:" class="md-nav__link">
+    SchemaRegistryClient:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" title="Methods:" class="md-nav__link">
+    Methods:
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-schema" title="Get Schema" class="md-nav__link">
+    Get Schema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-schema-by-id" title="Get schema by id:" class="md-nav__link">
+    Get schema by id:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-a-schema" title="Register a Schema:" class="md-nav__link">
+    Register a Schema:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-subjects" title="Get Subjects" class="md-nav__link">
+    Get Subjects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-schema" title="Delete Schema" class="md-nav__link">
+    Delete Schema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-if-a-schema-has-already-been-registered-under-the-specified-subject" title="Check if a schema has already been registered under the specified subject" class="md-nav__link">
+    Check if a schema has already been registered under the specified subject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-schema-version-under-a-specific-subject" title="Get schema version under a specific subject" class="md-nav__link">
+    Get schema version under a specific subject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletes-a-specific-version-of-the-schema-registered-under-a-subject" title="Deletes a specific version of the schema registered under a subject" class="md-nav__link">
+    Deletes a specific version of the schema registered under a subject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-compatibility" title="Test Compatibility:" class="md-nav__link">
+    Test Compatibility:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-compatibility" title="Get Compatibility:" class="md-nav__link">
+    Get Compatibility:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-compatibility" title="Update Compatibility:" class="md-nav__link">
+    Update Compatibility:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
+      Exceptions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../schemaregistry_server/" title="Schema Registry Server" class="md-nav__link">
+      Schema Registry Server
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schemaregistryclient" title="SchemaRegistryClient:" class="md-nav__link">
+    SchemaRegistryClient:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" title="Methods:" class="md-nav__link">
+    Methods:
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-schema" title="Get Schema" class="md-nav__link">
+    Get Schema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-schema-by-id" title="Get schema by id:" class="md-nav__link">
+    Get schema by id:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-a-schema" title="Register a Schema:" class="md-nav__link">
+    Register a Schema:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-subjects" title="Get Subjects" class="md-nav__link">
+    Get Subjects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-schema" title="Delete Schema" class="md-nav__link">
+    Delete Schema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-if-a-schema-has-already-been-registered-under-the-specified-subject" title="Check if a schema has already been registered under the specified subject" class="md-nav__link">
+    Check if a schema has already been registered under the specified subject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-schema-version-under-a-specific-subject" title="Get schema version under a specific subject" class="md-nav__link">
+    Get schema version under a specific subject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletes-a-specific-version-of-the-schema-registered-under-a-subject" title="Deletes a specific version of the schema registered under a subject" class="md-nav__link">
+    Deletes a specific version of the schema registered under a subject
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-compatibility" title="Test Compatibility:" class="md-nav__link">
+    Test Compatibility:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-compatibility" title="Get Compatibility:" class="md-nav__link">
+    Get Compatibility:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-compatibility" title="Update Compatibility:" class="md-nav__link">
+    Update Compatibility:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/marcosschroh/python-schema-registry-client/edit/master/docs/client.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="client">Client</h1>
+<p>The <code>Schema Registry Client</code> consumes the API exposed by the <code>schema-registry</code> to operate resources that are <code>avro</code> schemas.</p>
+<p>You probably won't use this but is good to know that exists. The <code>MessageSerialzer</code> is whom interact with the <code>SchemaRegistryClient</code></p>
+<h2 id="schemaregistryclient">SchemaRegistryClient:</h2>
+<div class="codehilite"><pre><span></span><span class="n">SchemaRegistryClient</span>
+    <span class="n">A</span> <span class="n">client</span> <span class="n">that</span> <span class="n">talks</span> <span class="n">to</span> <span class="n">a</span> <span class="n">Schema</span> <span class="n">Registry</span> <span class="n">over</span> <span class="n">HTTP</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">ca_location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cert_location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">key_location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">extra_headers</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+    <span class="n">Args</span><span class="p">:</span>
+        <span class="n">url</span> <span class="p">(</span><span class="nb">str</span><span class="o">|</span><span class="nb">dict</span><span class="p">)</span> <span class="n">url</span><span class="p">:</span> <span class="n">Url</span> <span class="n">to</span> <span class="n">schema</span> <span class="n">registry</span> <span class="ow">or</span> <span class="n">dictionary</span> <span class="n">containing</span> <span class="n">client</span> <span class="n">configuration</span><span class="o">.</span>
+        <span class="n">ca_location</span> <span class="p">(</span><span class="nb">str</span><span class="p">):</span> <span class="n">File</span> <span class="ow">or</span> <span class="n">directory</span> <span class="n">path</span> <span class="n">to</span> <span class="n">CA</span> <span class="n">certificate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">verifying</span> <span class="n">the</span> <span class="n">Schema</span> <span class="n">Registry</span> <span class="n">key</span><span class="o">.</span>
+        <span class="n">cert_location</span> <span class="p">(</span><span class="nb">str</span><span class="p">):</span> <span class="n">Path</span> <span class="n">to</span> <span class="n">public</span> <span class="n">key</span> <span class="n">used</span> <span class="k">for</span> <span class="n">authentication</span><span class="o">.</span>
+        <span class="n">key_location</span> <span class="p">(</span><span class="nb">str</span><span class="p">):</span> <span class="n">Path</span> <span class="n">to</span> <span class="n">private</span> <span class="n">key</span> <span class="n">used</span> <span class="k">for</span> <span class="n">authentication</span><span class="o">.</span>
+        <span class="n">extra_headers</span> <span class="p">(</span><span class="nb">dict</span><span class="p">):</span> <span class="n">Extra</span> <span class="n">headers</span> <span class="n">to</span> <span class="n">add</span> <span class="n">on</span> <span class="n">every</span> <span class="n">requests</span><span class="o">.</span>
+</pre></div>
+
+
+<h2 id="methods">Methods:</h2>
+<h4 id="get-schema">Get Schema</h4>
+<p>Get Schema for a given version. If version is <code>None</code>, try to resolve the latest schema</p>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">get_schema</span><span class="p">(</span><span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;latest&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">utils</span><span class="o">.</span><span class="n">SchemaVersion</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        version (int, optional): version id. If is None, the latest schema is returned</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        utils.SchemaVersion (nametupled): (subject, schema_id, schema, version)</span>
+
+<span class="sd">        None: If server returns a not success response:</span>
+<span class="sd">            404: Schema not found</span>
+<span class="sd">            422: Unprocessable entity</span>
+<span class="sd">            ~ (200 - 299): Not success</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="get-schema-by-id">Get schema by <code>id</code>:</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">get_by_id</span><span class="p">(</span><span class="n">schema_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">client</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">AvroSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        schema_id (int): Schema Id</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        client.schema.AvroSchema: Avro Record schema</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="register-a-schema">Register a Schema:</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">avro_schema</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">AvroSchema</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        avro_schema (avro.schema.RecordSchema): Avro schema to be registered</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: schema_id</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="get-subjects">Get Subjects</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">get_subjects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GET /subjects/(string: subject)</span>
+<span class="sd">    Get list of all registered subjects in your Schema Registry.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list [str]: list of registered subjects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="delete-schema">Delete Schema</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">delete_subject</span><span class="p">(</span><span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list (int): versions of the schema deleted under this subject</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="check-if-a-schema-has-already-been-registered-under-the-specified-subject">Check if a schema has already been registered under the specified subject</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">check_version</span><span class="p">(</span><span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">avro_schema</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">AvroSchema</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        avro_schema (avro.schema.RecordSchema): Avro schema</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict:</span>
+<span class="sd">            subject (string) -- Name of the subject that this schema is registered under</span>
+<span class="sd">            id (int) -- Globally unique identifier of the schema</span>
+<span class="sd">            version (int) -- Version of the returned schema</span>
+<span class="sd">            schema (dict) -- The Avro schema</span>
+
+<span class="sd">        None: If schema not found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="get-schema-version-under-a-specific-subject">Get schema version under a specific subject</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">get_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GET subjects/{subject}/versions</span>
+<span class="sd">    Get a list of versions registered under the specified subject.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list (str): version of the schema registered under this subject</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="deletes-a-specific-version-of-the-schema-registered-under-a-subject">Deletes a specific version of the schema registered under a subject</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">delete_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;latest&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DELETE /subjects/(string: subject)/versions/(versionId: version)</span>
+
+<span class="sd">    Deletes a specific version of the schema registered under this subject.</span>
+<span class="sd">    This only deletes the version and the schema ID remains intact making</span>
+<span class="sd">    it still possible to decode data using the schema ID.</span>
+<span class="sd">    This API is recommended to be used only in development environments or</span>
+<span class="sd">    under extreme circumstances where-in, its required to delete a previously</span>
+<span class="sd">    registered schema for compatibility purposes or re-register previously registered schema.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        version (str): Version of the schema to be deleted. </span>
+<span class="sd">            Valid values for versionId are between [1,2^31-1] or the string &quot;latest&quot;.</span>
+<span class="sd">            &quot;latest&quot; deletes the last registered schema under the specified subject.</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: version of the schema deleted</span>
+<span class="sd">        None: If the subject or version does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="test-compatibility">Test Compatibility:</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">test_compatibility</span><span class="p">(</span><span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">avro_schema</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">AvroSchema</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;latest&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    By default the latest version is checked against.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        avro_schema (avro.schema.RecordSchema): Avro schema parsed</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if schema given compatible, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="get-compatibility">Get Compatibility:</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">get_compatibility</span><span class="p">(</span><span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the current compatibility level for a subject.  Result will be one of:</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject (str): subject name</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: one of BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE,</span>
+<span class="sd">            FULL, FULL_TRANSITIVE, NONE</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ClientError: if the request was unsuccessful or an invalid</span>
+<span class="sd">        compatibility level was returned</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<h4 id="update-compatibility">Update Compatibility:</h4>
+<div class="codehilite"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">update_compatibility</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the compatibility level for a subject.</span>
+<span class="sd">    If subject is None, the compatibility level is global.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        level (str): one of BACKWARD, BACKWARD_TRANSITIVE, FORWARD, FORWARD_TRANSITIVE,</span>
+<span class="sd">            FULL, FULL_TRANSITIVE, NONE</span>
+<span class="sd">        headers (dict): Extra headers to add on the requests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if compatibility was updated</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ClientError: if the request was unsuccessful or an invalid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../serializer/" title="Message Serializer" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Message Serializer
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../exceptions/" title="Exceptions" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Exceptions
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
