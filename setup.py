@@ -10,7 +10,7 @@ __version__ = "0.0.1"
 with open("README.md") as readme_file:
     long_description = readme_file.read()
 
-requires = ["fastavro>=0.22.3", "requests-async==0.4.1" "aiofiles==0.4.0"]
+requires = ["fastavro<=0.22.3", "requests-async==0.4.1" "aiofiles==0.4.0"]
 
 setup(
     name="async-python-schema-registry-client",
