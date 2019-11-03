@@ -10,18 +10,19 @@ __version__ = "0.0.1"
 with open("README.md") as readme_file:
     long_description = readme_file.read()
 
-requires = ["fastavro>=0.22.3", "requests-async==0.4.1" "aiofiles==0.4.0"]
+requires = ["fastavro<=0.22.3", "requests-async==0.4.1" "aiofiles==0.4.0"]
 
 setup(
     name="async-python-schema-registry-client",
     version=__version__,
     description="Asyn Python Rest Client to interact against Schema Registry Confluent Server to manage Avro Schemas",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Marcos Schroh",
     author_email="schrohm@gmail.com",
     install_requires=requires,
     url="https://github.com/marcosschroh/async-python-schema-registry-client",
-    download_url="",
+    download_url="https://pypi.org/project/async-python-schema-registry-client",
     packages=find_packages(exclude=("tests",)),
     include_package_data=True,
     license="GPLv3",
