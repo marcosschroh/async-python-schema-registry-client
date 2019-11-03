@@ -10,7 +10,7 @@ Async Python Rest Client to interact against [schema-registry](https://docs.conf
 
 ## Requirements
 
-python 3.6+, fastavro>=0.22.3, requests-async>=0.4.1, aiofiles>=0.4.0
+python 3.6+, fastavro<=0.22.3, requests-async==0.4.1, aiofiles==0.4.0
 
 ## Installation
 
