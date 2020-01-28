@@ -1,7 +1,8 @@
 import json
-import fastavro
 import typing
+
 import aiofiles
+import fastavro
 
 
 class AvroSchema:

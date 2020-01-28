@@ -3,7 +3,7 @@
 
 """ setup.py for python-schema_registry."""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 __version__ = "0.0.2"
 
@@ -11,11 +11,12 @@ with open("README.md") as readme_file:
     long_description = readme_file.read()
 
 requires = ["fastavro<=0.22.3", "requests-async==0.4.1", "aiofiles==0.4.0"]
+description = f"Asyn Python Rest Client to interact against Schema Registry Confluent Server" f"to manage Avro Schemas"
 
 setup(
     name="async-python-schema-registry-client",
     version=__version__,
-    description="Asyn Python Rest Client to interact against Schema Registry Confluent Server to manage Avro Schemas",
+    description=description,
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Marcos Schroh",
@@ -25,7 +26,7 @@ setup(
     download_url="https://pypi.org/project/async-python-schema-registry-client",
     packages=find_packages(exclude=("tests",)),
     include_package_data=True,
-    license="GPLv3",
+    license="MIT",
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

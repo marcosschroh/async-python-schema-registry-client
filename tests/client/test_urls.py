@@ -1,14 +1,6 @@
-import pytest
 import urllib
 
 from schema_registry.client import urls
-
-
-def test_fail_url_manager_creation():
-    base_url = "localhost:8081"
-
-    with pytest.raises(AssertionError):
-        urls.UrlManager(base_url, [])
 
 
 def test_urls_generation():

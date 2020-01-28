@@ -23,4 +23,10 @@ VALID_METHODS = ("GET", "POST", "PUT", "DELETE")
 VALID_AUTH_PROVIDERS = ("URL", "USER_INFO", "SASL_INHERIT")
 
 HEADERS = "application/vnd.schemaregistry.v1+json"
-ACCEPT_HEADERS = "application/vnd.schema_registry.v1+json, application/vnd.schema_registry+json, application/json"
+HEADER_AVRO = "application/avro"
+HEADER_AVRO_JSON = "application/x-avro-json"
+HEADER_APPLICATION_JSON = "application/json"
+HEADER_SCHEMA_REGISTRY_V1 = "application/vnd.schema_registry.v1+json"
+HEADER_SCHEMA_REGISTRY = "application/vnd.schema_registry+json"
+
+ACCEPT_HEADERS = f"{HEADER_SCHEMA_REGISTRY_V1}, {HEADER_SCHEMA_REGISTRY}, {HEADER_APPLICATION_JSON}"

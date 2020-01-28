@@ -1,9 +1,8 @@
-import pytest
-import struct
 import datetime
+import struct
 
+import pytest
 from schema_registry.client import schema
-
 from tests import data_gen
 
 
@@ -28,9 +27,7 @@ async def test_encode_with_schema_id(client, message_serializer):
 
     records = data_gen.BASIC_ITEMS
     for record in records:
-        message = await message_serializer.encode_record_with_schema_id(
-            schema_id, record
-        )
+        message = await message_serializer.encode_record_with_schema_id(schema_id, record)
         await assertMessageIsSame(message, record, schema_id, message_serializer)
 
     adv = schema.AvroSchema(data_gen.ADVANCED_SCHEMA)
@@ -41,9 +38,7 @@ async def test_encode_with_schema_id(client, message_serializer):
 
     records = data_gen.ADVANCED_ITEMS
     for record in records:
-        message = await message_serializer.encode_record_with_schema_id(
-            adv_schema_id, record
-        )
+        message = await message_serializer.encode_record_with_schema_id(adv_schema_id, record)
         await assertMessageIsSame(message, record, adv_schema_id, message_serializer)
 
 
@@ -70,9 +65,7 @@ async def test_encode_logical_types(client, message_serializer):
 
 
 @pytest.mark.asyncio
-async def test_encode_decode_with_schema_from_json(
-    message_serializer, deployment_schema
-):
+async def test_encode_decode_with_schema_from_json(message_serializer, deployment_schema):
     deployment_record = {
         "image": "registry.gitlab.com/my-project:1.0.0",
         "replicas": 1,
@@ -101,9 +94,7 @@ async def test_fail_encode_with_schema(message_serializer, deployment_schema):
     }
 
     with pytest.raises(TypeError):
-        await message_serializer.encode_record_with_schema(
-            "deployment", deployment_schema, bad_record
-        )
+        await message_serializer.encode_record_with_schema("deployment", deployment_schema, bad_record)
 
 
 @pytest.mark.asyncio
@@ -115,9 +106,7 @@ async def test_encode_record_with_schema(client, message_serializer):
     records = data_gen.BASIC_ITEMS
 
     for record in records:
-        message = await message_serializer.encode_record_with_schema(
-            topic, basic, record
-        )
+        message = await message_serializer.encode_record_with_schema(topic, basic, record)
         await assertMessageIsSame(message, record, schema_id, message_serializer)
 
 

@@ -3,15 +3,14 @@ import logging
 import typing
 from collections import defaultdict
 
-import requests_async as requests
 from requests import utils as requests_utils
 
-from schema_registry.client.errors import ClientError
-from schema_registry.client.schema import AvroSchema
+import requests_async as requests
 from schema_registry.client import status, utils
-from schema_registry.client.urls import UrlManager
+from schema_registry.client.errors import ClientError
 from schema_registry.client.paths import paths
-
+from schema_registry.client.schema import AvroSchema
+from schema_registry.client.urls import UrlManager
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,7 @@ class SchemaRegistryClient:
 
     Args:
         url (str|dict) url: Url to schema registry or dictionary containing client configuration.
-        ca_location (str): File or directory path to CA certificate(s) for verifying the Schema Registry key.
+        ca_location (str): File or path to CA certificate(s) for verifying the Schema Registry key.
         cert_location (str): Path to public key used for authentication.
         key_location (str): Path to ./vate key used for authentication.
         extra_headers (dict): Extra headers to add on every requests.
@@ -79,15 +78,13 @@ class SchemaRegistryClient:
         return session
 
     @staticmethod
-    def _configure_basic_auth(
-        conf: dict
-    ) -> typing.Union[None, str, typing.Tuple[str, str]]:
+    def _configure_basic_auth(conf: dict,) -> typing.Union[None, str, typing.Tuple[str, str]]:
         url = conf["url"]
         auth_provider = conf.pop("basic.auth.credentials.source", "URL").upper()
 
         if auth_provider not in utils.VALID_AUTH_PROVIDERS:
             raise ValueError(
-                f"schema.registry.basic.auth.credentials.source must be one of {utils.VALID_AUTH_PROVIDERS}"
+                f"schema.registry.basic.auth.credentials.source " f"must be one of {utils.VALID_AUTH_PROVIDERS}"
             )
 
         if auth_provider == "SASL_INHERIT":
@@ -103,15 +100,13 @@ class SchemaRegistryClient:
         return auth
 
     @staticmethod
-    def _configure_client_tls(
-        conf: dict
-    ) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
+    def _configure_client_tls(conf: dict,) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
         cert = (conf.get("ssl.certificate.location"), conf.get("ssl.key.location"))
 
         # Both values can be None or no values can be None
         if bool(cert[0]) != bool(cert[1]):
             raise ValueError(
-                "Both schema.registry.ssl.certificate.location and schema.registry.ssl.key.location must be set"
+                f"Both schema.registry.ssl.certificate.location and " f"schema.registry.ssl.key.location must be set"
             )
 
         return cert
@@ -135,9 +130,7 @@ class SchemaRegistryClient:
         self, url: str, method: str = "GET", body: dict = None, headers: dict = None
     ) -> tuple:  # type: ignore
         if method not in utils.VALID_METHODS:
-            raise ClientError(
-                f"Method {method} is invalid; valid methods include {utils.VALID_METHODS}"
-            )
+            raise ClientError(f"Method {method} is invalid; valid methods include {utils.VALID_METHODS}")
 
         _headers = self.prepare_headers(body=body, headers=headers)
         response = await self.session.request(method, url, headers=_headers, json=body)
@@ -148,18 +141,12 @@ class SchemaRegistryClient:
             return response.content, response.status_code
 
     @staticmethod
-    def _add_to_cache(
-        cache: dict, subject: str, schema: AvroSchema, value: typing.Union[str, int]
-    ) -> None:
+    def _add_to_cache(cache: dict, subject: str, schema: AvroSchema, value: typing.Union[str, int]) -> None:
         sub_cache = cache[subject]
         sub_cache[schema] = value
 
     def _cache_schema(
-        self,
-        schema: AvroSchema,
-        schema_id: int,
-        subject: str = None,
-        version: typing.Union[str, int] = None,
+        self, schema: AvroSchema, schema_id: int, subject: str = None, version: typing.Union[str, int] = None,
     ) -> None:
         if schema_id in self.id_to_schema:
             schema = self.id_to_schema[schema_id]
@@ -169,13 +156,9 @@ class SchemaRegistryClient:
         if subject:
             self._add_to_cache(self.subject_to_schema_ids, subject, schema, schema_id)
             if version:
-                self._add_to_cache(
-                    self.subject_to_schema_versions, subject, schema, version
-                )
+                self._add_to_cache(self.subject_to_schema_versions, subject, schema, version)
 
-    async def register(
-        self, subject: str, avro_schema: AvroSchema, headers: dict = None
-    ) -> int:
+    async def register(self, subject: str, avro_schema: AvroSchema, headers: dict = None) -> int:
         """
         POST /subjects/(string: subject)/versions
         Register a schema with the registry under the given subject
@@ -200,9 +183,7 @@ class SchemaRegistryClient:
         url, method = self.url_manager.url_for("register", subject=subject)
         body = {"schema": json.dumps(avro_schema.schema)}
 
-        result, code = await self.request(
-            url, method=method, body=body, headers=headers
-        )
+        result, code = await self.request(url, method=method, body=body, headers=headers)
 
         msg = None
         if code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN):
@@ -240,9 +221,7 @@ class SchemaRegistryClient:
         if status.is_success(code):
             return result
 
-        raise ClientError(
-            "Unable to delete subject", http_code=code, server_traceback=result
-        )
+        raise ClientError("Unable to delete subject", http_code=code, server_traceback=result)
 
     async def delete_subject(self, subject: str, headers: dict = None) -> list:
         """
@@ -266,13 +245,9 @@ class SchemaRegistryClient:
         elif code == status.HTTP_404_NOT_FOUND:
             return []
 
-        raise ClientError(
-            "Unable to delete subject", http_code=code, server_traceback=result
-        )
+        raise ClientError("Unable to delete subject", http_code=code, server_traceback=result)
 
-    async def get_by_id(
-        self, schema_id: int, headers: dict = None
-    ) -> typing.Optional[AvroSchema]:
+    async def get_by_id(self, schema_id: int, headers: dict = None) -> typing.Optional[AvroSchema]:
         """
         GET /schemas/ids/{int: id}
         Retrieve a parsed avro schema by id or None if not found
@@ -302,16 +277,11 @@ class SchemaRegistryClient:
             return result
 
         raise ClientError(
-            f"Received bad schema (id {schema_id})",
-            http_code=code,
-            server_traceback=result,
+            f"Received bad schema (id {schema_id})", http_code=code, server_traceback=result,
         )
 
     async def get_schema(
-        self,
-        subject: str,
-        version: typing.Union[int, str] = "latest",
-        headers: dict = None,
+        self, subject: str, version: typing.Union[int, str] = "latest", headers: dict = None,
     ) -> typing.Optional[utils.SchemaVersion]:
         """
         GET /subjects/(string: subject)/versions/(versionId: version)
@@ -330,9 +300,7 @@ class SchemaRegistryClient:
                 422: Unprocessable entity
                 ~ (200 - 299): Not success
         """
-        url, method = self.url_manager.url_for(
-            "get_schema", subject=subject, version=version
-        )
+        url, method = self.url_manager.url_for("get_schema", subject=subject, version=version)
 
         result, code = await self.request(url, method=method, headers=headers)
         if code == status.HTTP_404_NOT_FOUND:
@@ -381,16 +349,11 @@ class SchemaRegistryClient:
             return []
 
         raise ClientError(
-            f"Unable to get the versions for subject {subject}",
-            http_code=code,
-            server_traceback=result,
+            f"Unable to get the versions for subject {subject}", http_code=code, server_traceback=result,
         )
 
     async def delete_version(
-        self,
-        subject: str,
-        version: typing.Union[int, str] = "latest",
-        headers: dict = None,
+        self, subject: str, version: typing.Union[int, str] = "latest", headers: dict = None,
     ) -> typing.Optional[int]:
         """
         DELETE /subjects/(string: subject)/versions/(versionId: version)
@@ -404,7 +367,7 @@ class SchemaRegistryClient:
 
         Args:
             subject (str): subject name
-            version (str): Version of the schema to be deleted. 
+            version (str): Version of the schema to be deleted.
                 Valid values for versionId are between [1,2^31-1] or the string "latest".
                 "latest" deletes the last registered schema under the specified subject.
             headers (dict): Extra headers to add on the requests
@@ -413,9 +376,7 @@ class SchemaRegistryClient:
             int: version of the schema deleted
             None: If the subject or version does not exist.
         """
-        url, method = self.url_manager.url_for(
-            "delete_version", subject=subject, version=version
-        )
+        url, method = self.url_manager.url_for("delete_version", subject=subject, version=version)
 
         result, code = await self.request(url, method=method, headers=headers)
 
@@ -424,9 +385,7 @@ class SchemaRegistryClient:
         elif status.is_client_error(code):
             return None
 
-        raise ClientError(
-            "Unable to delete the version", http_code=code, server_traceback=result
-        )
+        raise ClientError("Unable to delete the version", http_code=code, server_traceback=result)
 
     async def check_version(
         self, subject: str, avro_schema: AvroSchema, headers: dict = None
@@ -463,9 +422,7 @@ class SchemaRegistryClient:
         url, method = self.url_manager.url_for("check_version", subject=subject)
         body = {"schema": json.dumps(avro_schema.schema)}
 
-        result, code = await self.request(
-            url, method=method, body=body, headers=headers
-        )
+        result, code = await self.request(url, method=method, body=body, headers=headers)
         if code == status.HTTP_404_NOT_FOUND:
             logger.error(f"Not found: {code}")
             return None
@@ -474,20 +431,12 @@ class SchemaRegistryClient:
             version = result.get("version")
             self._cache_schema(avro_schema, schema_id, subject, version)
 
-            return utils.SchemaVersion(
-                subject, schema_id, version, result.get("schema")
-            )
+            return utils.SchemaVersion(subject, schema_id, version, result.get("schema"))
 
-        raise ClientError(
-            "Unable to get version of a schema", http_code=code, server_traceback=result
-        )
+        raise ClientError("Unable to get version of a schema", http_code=code, server_traceback=result)
 
     async def test_compatibility(
-        self,
-        subject: str,
-        avro_schema: AvroSchema,
-        version: typing.Union[int, str] = "latest",
-        headers: dict = None,
+        self, subject: str, avro_schema: AvroSchema, version: typing.Union[int, str] = "latest", headers: dict = None,
     ) -> bool:
         """
         POST /compatibility/subjects/(string: subject)/versions/(versionId: version)
@@ -502,13 +451,9 @@ class SchemaRegistryClient:
         Returns:
             bool: True if schema given compatible, False otherwise
         """
-        url, method = self.url_manager.url_for(
-            "test_compatibility", subject=subject, version=version
-        )
+        url, method = self.url_manager.url_for("test_compatibility", subject=subject, version=version)
         body = {"schema": json.dumps(avro_schema.schema)}
-        result, code = await self.request(
-            url, method=method, body=body, headers=headers
-        )
+        result, code = await self.request(url, method=method, body=body, headers=headers)
 
         if code == status.HTTP_404_NOT_FOUND:
             logger.error(f"Subject or version not found: {code}")
@@ -519,13 +464,9 @@ class SchemaRegistryClient:
         elif status.is_success(code):
             return result.get("is_compatible")
 
-        raise ClientError(
-            "Unable to check the compatibility", http_code=code, server_traceback=result
-        )
+        raise ClientError("Unable to check the compatibility", http_code=code, server_traceback=result)
 
-    async def update_compatibility(
-        self, level: str, subject: str = None, headers: dict = None
-    ) -> bool:
+    async def update_compatibility(self, level: str, subject: str = None, headers: dict = None) -> bool:
         """
         PUT /config/(string: subject)
         Update the compatibility level.
@@ -549,18 +490,14 @@ class SchemaRegistryClient:
         url, method = self.url_manager.url_for("update_compatibility", subject=subject)
         body = {"compatibility": level}
 
-        result, code = await self.request(
-            url, method=method, body=body, headers=headers
-        )
+        result, code = await self.request(url, method=method, body=body, headers=headers)
 
         print(result, code)
 
         if status.is_success(code):
             return True
 
-        raise ClientError(
-            f"Unable to update level: {level}.", http_code=code, server_traceback=result
-        )
+        raise ClientError(f"Unable to update level: {level}.", http_code=code, server_traceback=result)
 
     async def get_compatibility(self, subject: str = None, headers: dict = None) -> str:
         """
@@ -596,7 +533,5 @@ class SchemaRegistryClient:
             return compatibility
 
         raise ClientError(
-            f"Unable to fetch compatibility level. Error code: {code}",
-            http_code=code,
-            server_traceback=result,
+            f"Unable to fetch compatibility level. Error code: {code}", http_code=code, server_traceback=result,
         )

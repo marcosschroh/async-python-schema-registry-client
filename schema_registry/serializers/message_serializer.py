@@ -6,10 +6,10 @@ import traceback
 import typing
 
 from fastavro import schemaless_reader, schemaless_writer
-
+from schema_registry.client import SchemaRegistryClient, schema
 from schema_registry.client.errors import ClientError
-from schema_registry.client import schema, SchemaRegistryClient
-from .errors import SerializerError, KeySerializerError, ValueSerializerError
+
+from .errors import KeySerializerError, SerializerError, ValueSerializerError
 
 log = logging.getLogger(__name__)
 
@@ -54,11 +54,7 @@ class MessageSerializer:
         return lambda record, fp: schemaless_writer(fp, avro_schema.schema, record)
 
     async def encode_record_with_schema(
-        self,
-        subject: str,
-        avro_schema: schema.AvroSchema,
-        record: dict,
-        is_key: bool = False,
+        self, subject: str, avro_schema: schema.AvroSchema, record: dict, is_key: bool = False,
     ) -> bytes:
         """
         Given a parsed avro schema, encode a record for the given subject.
@@ -98,9 +94,7 @@ class MessageSerializer:
 
         return await self.encode_record_with_schema_id(schema_id, record, is_key=is_key)
 
-    async def encode_record_with_schema_id(
-        self, schema_id: int, record: dict, is_key: bool = False
-    ) -> bytes:
+    async def encode_record_with_schema_id(self, schema_id: int, record: dict, is_key: bool = False) -> bytes:
         """
         Encode a record with a given schema id.  The record must
         be a python dictionary.
@@ -124,9 +118,7 @@ class MessageSerializer:
                 self.id_to_writers[schema_id] = self._get_encoder_func(avro_schema)
             except ClientError:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
-                raise serialize_err(
-                    repr(traceback.format_exception(exc_type, exc_value, exc_traceback))
-                )
+                raise serialize_err(repr(traceback.format_exception(exc_type, exc_value, exc_traceback)))
 
         writer = self.id_to_writers[schema_id]
         with ContextStringIO() as outf:

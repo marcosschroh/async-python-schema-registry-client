@@ -1,8 +1,6 @@
 import pytest
-
-from schema_registry.client import schema, errors
+from schema_registry.client import errors, schema
 from schema_registry.client.client import requests
-
 from tests import data_gen
 
 
@@ -40,9 +38,7 @@ async def test_update_global_compatibility(client):
 @pytest.mark.asyncio
 async def test_update_compatibility_fail(client, response_klass, async_mock):
     http_code = 404
-    mock = async_mock(
-        requests.sessions.Session, "request", returned_value=response_klass(http_code)
-    )
+    mock = async_mock(requests.sessions.Session, "request", returned_value=response_klass(http_code))
 
     with mock:
         with pytest.raises(errors.ClientError) as excinfo:
