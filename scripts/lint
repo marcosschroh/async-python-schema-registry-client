@@ -1,5 +1,12 @@
 #!/bin/sh
 
-black --line-length 120 --check .
-flake8 .
-isort -rc --line-width 120 .
+export PREFIX=""
+if [ -d 'venv' ] ; then
+    export PREFIX="venv/bin/"
+fi
+
+set -x
+
+${PREFIX}black .
+${PREFIX}autoflake --in-place --recursive schema_registry tests setup.py
+${PREFIX}isort -rc --line-width 120 .

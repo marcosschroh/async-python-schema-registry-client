@@ -1,5 +1,6 @@
 import fastavro
 import pytest
+
 from schema_registry.client import schema
 from tests import data_gen
 

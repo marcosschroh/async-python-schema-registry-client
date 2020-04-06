@@ -17,5 +17,3 @@ matrix:
     - name: Test
       python: 3.7
       script: ./scripts/clean && ./scripts/test
-    - name: Lint	
-      script: ./scripts/lint

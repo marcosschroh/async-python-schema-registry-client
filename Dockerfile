@@ -16,6 +16,8 @@ WORKDIR /schema_registry/
 
 COPY scripts/wait_for_services .
 COPY requirements.txt .
+COPY setup.cfg .
+COPY pyproject.toml .
 
 # create a file in order to have coverage
 RUN touch .coverage

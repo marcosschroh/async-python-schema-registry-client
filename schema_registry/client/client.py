@@ -3,9 +3,9 @@ import logging
 import typing
 from collections import defaultdict
 
+import requests_async as requests
 from requests import utils as requests_utils
 
-import requests_async as requests
 from schema_registry.client import status, utils
 from schema_registry.client.errors import ClientError
 from schema_registry.client.paths import paths
@@ -92,7 +92,7 @@ class SchemaRegistryClient:
                 raise ValueError("SASL_INHERIT does not support SASL mechanisms GSSAPI")
             auth = (conf.pop("sasl.username", ""), conf.pop("sasl.password", ""))
         elif auth_provider == "USER_INFO":
-            auth = tuple(conf.pop("basic.auth.user.info", "").split(":"))
+            auth = tuple(conf.pop("basic.auth.user.info", "").split(":"))  # type: ignore
         else:
             auth = requests_utils.get_auth_from_url(url)
         conf["url"] = requests_utils.urldefragauth(url)
@@ -126,9 +126,7 @@ class SchemaRegistryClient:
 
         return _headers
 
-    async def request(
-        self, url: str, method: str = "GET", body: dict = None, headers: dict = None
-    ) -> tuple:  # type: ignore
+    async def request(self, url: str, method: str = "GET", body: dict = None, headers: dict = None) -> tuple:
         if method not in utils.VALID_METHODS:
             raise ClientError(f"Method {method} is invalid; valid methods include {utils.VALID_METHODS}")
 
@@ -146,7 +144,7 @@ class SchemaRegistryClient:
         sub_cache[schema] = value
 
     def _cache_schema(
-        self, schema: AvroSchema, schema_id: int, subject: str = None, version: typing.Union[str, int] = None,
+        self, schema: AvroSchema, schema_id: int, subject: str = None, version: typing.Union[str, int] = None
     ) -> None:
         if schema_id in self.id_to_schema:
             schema = self.id_to_schema[schema_id]
@@ -276,12 +274,10 @@ class SchemaRegistryClient:
             self._cache_schema(result, schema_id)
             return result
 
-        raise ClientError(
-            f"Received bad schema (id {schema_id})", http_code=code, server_traceback=result,
-        )
+        raise ClientError(f"Received bad schema (id {schema_id})", http_code=code, server_traceback=result)
 
     async def get_schema(
-        self, subject: str, version: typing.Union[int, str] = "latest", headers: dict = None,
+        self, subject: str, version: typing.Union[int, str] = "latest", headers: dict = None
     ) -> typing.Optional[utils.SchemaVersion]:
         """
         GET /subjects/(string: subject)/versions/(versionId: version)
@@ -348,12 +344,10 @@ class SchemaRegistryClient:
             logger.error(f"Subject {subject} not found")
             return []
 
-        raise ClientError(
-            f"Unable to get the versions for subject {subject}", http_code=code, server_traceback=result,
-        )
+        raise ClientError(f"Unable to get the versions for subject {subject}", http_code=code, server_traceback=result)
 
     async def delete_version(
-        self, subject: str, version: typing.Union[int, str] = "latest", headers: dict = None,
+        self, subject: str, version: typing.Union[int, str] = "latest", headers: dict = None
     ) -> typing.Optional[int]:
         """
         DELETE /subjects/(string: subject)/versions/(versionId: version)
@@ -436,7 +430,7 @@ class SchemaRegistryClient:
         raise ClientError("Unable to get version of a schema", http_code=code, server_traceback=result)
 
     async def test_compatibility(
-        self, subject: str, avro_schema: AvroSchema, version: typing.Union[int, str] = "latest", headers: dict = None,
+        self, subject: str, avro_schema: AvroSchema, version: typing.Union[int, str] = "latest", headers: dict = None
     ) -> bool:
         """
         POST /compatibility/subjects/(string: subject)/versions/(versionId: version)
@@ -525,13 +519,11 @@ class SchemaRegistryClient:
                 else:
                     error_msg_suffix = str(compatibility)
                 raise ClientError(
-                    f"Invalid compatibility level received: {error_msg_suffix}",
-                    http_code=code,
-                    server_traceback=result,
+                    f"Invalid compatibility level received: {error_msg_suffix}", http_code=code, server_traceback=result
                 )
 
             return compatibility
 
         raise ClientError(
-            f"Unable to fetch compatibility level. Error code: {code}", http_code=code, server_traceback=result,
+            f"Unable to fetch compatibility level. Error code: {code}", http_code=code, server_traceback=result
         )

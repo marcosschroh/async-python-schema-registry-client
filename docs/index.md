@@ -5,9 +5,7 @@
 [![codecov](https://codecov.io/gh/marcosschroh/async-python-schema-registry-client/branch/master/graph/badge.svg)](https://codecov.io/gh/marcosschroh/async-python-schema-registry-client)
 [![Python Version](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)
 
-
 Async Python Rest Client to interact against [schema-registry](https://docs.confluent.io/current/schema-registry/index.html) confluent server to manage [Avro Schemas](https://docs.oracle.com/database/nosql-12.1.3.1/GettingStartedGuide/avroschemas.html) resources.
-
 
 ## Requirements
 
@@ -29,11 +27,17 @@ So, our producers/consumers have to serialize/deserialize messages every time th
 
 Also, could be a use case that we would like to have an Application only to administrate `Avro Schemas` (register, update compatibilities, delete old schemas, etc.), so the `SchemaRegistryClient` is perfect.
 
-## Run Tests
+## Development
 
 The tests are run against the `Schema Server` using `docker compose`, so you will need
 `Docker` and `Docker Compose` installed.
 
 ```bash
 ./scripts/test.sh
+```
+
+Lint code:
+
+```sh
+./scripts/lint
 ```

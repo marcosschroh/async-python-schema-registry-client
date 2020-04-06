@@ -17,7 +17,7 @@ python 3.6+, fastavro, requests-async, aiofiles
 pip install async-python-schema-registry-client
 ```
 
-## Client API, Serializer, Faust Integration and Schema Server description
+## Client API, Serializer and Schema Server description
 
 **Documentation**: [https://marcosschroh.github.io/async-python-schema-registry-client.io](https://marcosschroh.github.io/async-python-schema-registry-client)
 
@@ -31,11 +31,17 @@ So, our producers/consumers have to serialize/deserialize messages every time th
 
 Also, could be a use case that we would like to have an Application only to administrate `Avro Schemas` (register, update compatibilities, delete old schemas, etc.), so the `SchemaRegistryClient` is perfect.
 
-## Run Tests
+## Development
 
 The tests are run against the `Schema Server` using `docker compose`, so you will need
 `Docker` and `Docker Compose` installed.
 
 ```sh
 ./scripts/test
+```
+
+Lint code:
+
+```sh
+./scripts/lint
 ```

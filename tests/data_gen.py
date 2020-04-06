@@ -35,12 +35,7 @@ def create_adv_item(i):
 
 
 def create_logical_item():
-    return {
-        "metadata": {
-            "timestamp": fake.past_datetime(),
-            "total": fake.pydecimal(left_digits=2, right_digits=2),
-        }
-    }
+    return {"metadata": {"timestamp": fake.past_datetime(), "total": fake.pydecimal(left_digits=2, right_digits=2)}}
 
 
 BASIC_SCHEMA = load_schema_file(os.path.join(AVRO_SCHEMAS_DIR, "basic_schema.avsc"))

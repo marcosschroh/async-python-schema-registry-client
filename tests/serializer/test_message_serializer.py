@@ -1,7 +1,7 @@
-import datetime
 import struct
 
 import pytest
+
 from schema_registry.client import schema
 from tests import data_gen
 
@@ -65,11 +65,7 @@ async def test_encode_logical_types(client, message_serializer):
 
 @pytest.mark.asyncio
 async def test_encode_decode_with_schema_from_json(message_serializer, deployment_schema):
-    deployment_record = {
-        "image": "registry.gitlab.com/my-project:1.0.0",
-        "replicas": 1,
-        "port": 8080,
-    }
+    deployment_record = {"image": "registry.gitlab.com/my-project:1.0.0", "replicas": 1, "port": 8080}
 
     message_encoded = await message_serializer.encode_record_with_schema(
         "deployment", deployment_schema, deployment_record
@@ -86,11 +82,7 @@ async def test_encode_decode_with_schema_from_json(message_serializer, deploymen
 
 @pytest.mark.asyncio
 async def test_fail_encode_with_schema(message_serializer, deployment_schema):
-    bad_record = {
-        "image": "registry.gitlab.com/my-project:1.0.0",
-        "replicas": "1",
-        "port": "8080",
-    }
+    bad_record = {"image": "registry.gitlab.com/my-project:1.0.0", "replicas": "1", "port": "8080"}
 
     with pytest.raises(TypeError):
         await message_serializer.encode_record_with_schema("deployment", deployment_schema, bad_record)

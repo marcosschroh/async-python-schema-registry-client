@@ -6,6 +6,7 @@ import traceback
 import typing
 
 from fastavro import schemaless_reader, schemaless_writer
+
 from schema_registry.client import SchemaRegistryClient, schema
 from schema_registry.client.errors import ClientError
 
@@ -24,9 +25,8 @@ class ContextStringIO(io.BytesIO):
     def __enter__(self) -> "ContextStringIO":
         return self
 
-    def __exit__(self, *args: typing.Any) -> bool:
+    def __exit__(self, *args: typing.Any):
         self.close()
-        return False
 
 
 class MessageSerializer:
@@ -54,7 +54,7 @@ class MessageSerializer:
         return lambda record, fp: schemaless_writer(fp, avro_schema.schema, record)
 
     async def encode_record_with_schema(
-        self, subject: str, avro_schema: schema.AvroSchema, record: dict, is_key: bool = False,
+        self, subject: str, avro_schema: schema.AvroSchema, record: dict, is_key: bool = False
     ) -> bytes:
         """
         Given a parsed avro schema, encode a record for the given subject.

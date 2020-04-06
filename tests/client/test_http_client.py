@@ -2,6 +2,7 @@ import os
 
 import pytest
 import requests_async as requests
+
 from schema_registry.client import SchemaRegistryClient, schema, utils
 from tests import data_gen
 
@@ -22,7 +23,7 @@ def test_cert_no_key():
 
 def test_cert_with_key():
     client = SchemaRegistryClient(
-        url="https://127.0.0.1:65534", cert_location="/path/to/cert", key_location="/path/to/key",
+        url="https://127.0.0.1:65534", cert_location="/path/to/cert", key_location="/path/to/key"
     )
 
     assert ("/path/to/cert", "/path/to/key") == client.session.cert
@@ -45,7 +46,7 @@ async def test_override_headers(client, deployment_schema, response_klass, async
     subject = "test"
     override_header = {"custom-serialization": utils.HEADER_AVRO}
 
-    mock = async_mock(requests.sessions.Session, "request", returned_value=response_klass(200, content={"id": 1}),)
+    mock = async_mock(requests.sessions.Session, "request", returned_value=response_klass(200, content={"id": 1}))
 
     with mock:
         await client.register(subject, deployment_schema, headers=override_header)
@@ -121,5 +122,5 @@ def test_basic_auth_sasl_inherit():
 def test_basic_auth_invalid():
     with pytest.raises(ValueError):
         SchemaRegistryClient(
-            {"url": "https://user_url:secret_url@127.0.0.1:65534", "basic.auth.credentials.source": "VAULT",}
+            {"url": "https://user_url:secret_url@127.0.0.1:65534", "basic.auth.credentials.source": "VAULT"}
         )

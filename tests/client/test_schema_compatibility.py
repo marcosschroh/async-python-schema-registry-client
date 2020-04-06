@@ -1,4 +1,5 @@
 import pytest
+
 from schema_registry.client import errors, schema
 from schema_registry.client.client import requests
 from tests import data_gen
