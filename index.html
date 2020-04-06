@@ -283,8 +283,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#run-tests" title="Run Tests" class="md-nav__link">
-    Run Tests
+  <a href="#development" title="Development" class="md-nav__link">
+    Development
   </a>
   
 </li>
@@ -390,8 +390,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#run-tests" title="Run Tests" class="md-nav__link">
-    Run Tests
+  <a href="#development" title="Development" class="md-nav__link">
+    Development
   </a>
   
 </li>
@@ -422,7 +422,7 @@
 <a href="https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg"><img alt="Python Version" src="https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg" /></a></p>
 <p>Async Python Rest Client to interact against <a href="https://docs.confluent.io/current/schema-registry/index.html">schema-registry</a> confluent server to manage <a href="https://docs.oracle.com/database/nosql-12.1.3.1/GettingStartedGuide/avroschemas.html">Avro Schemas</a> resources.</p>
 <h2 id="requirements">Requirements</h2>
-<p>python 3.6+, fastavro&gt;=0.22.3, requests-async&gt;=0.4.1, aiofiles&gt;=0.4.0</p>
+<p>python 3.6+, fastavro, requests-async, aiofile</p>
 <h2 id="installation">Installation</h2>
 <div class="codehilite"><pre><span></span>pip install async-python-schema-registry-client
 </pre></div>
@@ -433,10 +433,15 @@
 <p><img alt="Confluent Architecture" src="img/confluent_architecture.png" /></p>
 <p>So, our producers/consumers have to serialize/deserialize messages every time that they send/receive from Kafka topics. In this picture, we can imagine a <code>Faust</code> application receiving messages (encoded with an Avro schema) and we want to deserialize them, so we can ask the <code>schema server</code> to do that for us. In this scenario, the <code>MessageSerializer</code> is perfect.</p>
 <p>Also, could be a use case that we would like to have an Application only to administrate <code>Avro Schemas</code> (register, update compatibilities, delete old schemas, etc.), so the <code>SchemaRegistryClient</code> is perfect.</p>
-<h2 id="run-tests">Run Tests</h2>
+<h2 id="development">Development</h2>
 <p>The tests are run against the <code>Schema Server</code> using <code>docker compose</code>, so you will need
 <code>Docker</code> and <code>Docker Compose</code> installed.</p>
 <div class="codehilite"><pre><span></span>./scripts/test.sh
+</pre></div>
+
+
+<p>Lint code:</p>
+<div class="codehilite"><pre><span></span>./scripts/lint
 </pre></div>
                 
                   
