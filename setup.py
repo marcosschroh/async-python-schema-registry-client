@@ -5,12 +5,12 @@
 
 from setuptools import find_packages, setup
 
-__version__ = "0.0.2"
+__version__ = "0.1.0"
 
 with open("README.md") as readme_file:
     long_description = readme_file.read()
 
-requires = ["fastavro<=0.22.3", "requests-async==0.4.1", "aiofiles==0.4.0"]
+requires = ["fastavro", "requests-async", "aiofiles"]
 description = f"Asyn Python Rest Client to interact against Schema Registry Confluent Server" f"to manage Avro Schemas"
 
 setup(
