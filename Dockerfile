@@ -14,7 +14,7 @@ RUN adduser --disabled-password --gecos '' myuser
 
 WORKDIR /schema_registry/
 
-COPY wait_for_services.sh .
+COPY scripts/wait_for_services .
 COPY requirements.txt .
 
 # create a file in order to have coverage
@@ -22,4 +22,4 @@ RUN touch .coverage
 
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["./wait_for_services.sh"]
+ENTRYPOINT ["./scripts/wait_for_services"]
