@@ -10,7 +10,7 @@ __version__ = "0.1.0"
 with open("README.md") as readme_file:
     long_description = readme_file.read()
 
-requires = ["fastavro", "requests-async", "aiofiles"]
+requires = ["fastavro", "httpx", "aiofiles"]
 description = f"Asyn Python Rest Client to interact against Schema Registry Confluent Server" f"to manage Avro Schemas"
 
 setup(

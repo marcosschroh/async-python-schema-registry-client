@@ -4,8 +4,8 @@ from collections import defaultdict
 
 
 class UrlManager:
-    def __init__(self, base_url: str, paths: list) -> None:
-        parsed_url = urllib.parse.urlparse(base_url)  # type: ignore
+    def __init__(self, base_url: str, paths: list):
+        parsed_url = urllib.parse.urlparse(base_url)
 
         assert parsed_url.scheme, f"The url does not have a schema, add one. For example http://{base_url}"
 
@@ -25,11 +25,11 @@ class UrlManager:
         path = self.paths[func]
         url = path.generate_url(**kwargs)
 
-        return urllib.parse.urljoin(self.base_url, url), path.method  # type: ignore
+        return urllib.parse.urljoin(self.base_url, url), path.method
 
 
 class Path:
-    def __init__(self, path: dict) -> None:
+    def __init__(self, path: dict):
         self.func = path[0]
         self.url = path[1]
         self.method = path[2]

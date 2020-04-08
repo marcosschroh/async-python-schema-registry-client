@@ -6,13 +6,13 @@ import fastavro
 
 
 class AvroSchema:
-    def __init__(self, schema: str) -> None:
+    def __init__(self, schema: str):
         if isinstance(schema, str):
             schema = json.loads(schema)
         self.schema = fastavro.parse_schema(schema, _force=True)
         self.generate_hash()
 
-    def generate_hash(self) -> None:
+    def generate_hash(self):
         self._hash = hash(json.dumps(self.schema))
 
     @property

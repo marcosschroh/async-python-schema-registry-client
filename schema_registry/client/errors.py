@@ -1,7 +1,7 @@
 class ClientError(Exception):
     """ Error thrown by Schema Registry clients """
 
-    def __init__(self, message: str, http_code: int = None, server_traceback: str = None) -> None:
+    def __init__(self, message: str, http_code: int = None, server_traceback: str = None):
         self.message = message
         self.server_traceback = server_traceback
         self.http_code = http_code
