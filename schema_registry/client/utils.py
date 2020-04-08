@@ -22,3 +22,9 @@ HEADER_SCHEMA_REGISTRY_V1 = "application/vnd.schema_registry.v1+json"
 HEADER_SCHEMA_REGISTRY = "application/vnd.schema_registry+json"
 
 ACCEPT_HEADERS = f"{HEADER_SCHEMA_REGISTRY_V1}, {HEADER_SCHEMA_REGISTRY}, {HEADER_APPLICATION_JSON}"
+
+URL = "url"
+SSL_CA_LOCATION = "ssl.ca.location"
+SSL_CERTIFICATE_LOCATION = "ssl.certificate.location"
+SSL_KEY_LOCATION = "ssl.key.location"
+SSL_KEY_PASSWORD = "ssl.key.password"

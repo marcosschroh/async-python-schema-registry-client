@@ -38,6 +38,8 @@ flat_schemas = {
     },
 }
 
+CERTIFICATES_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "certificates")
+
 
 class Response:
     def __init__(self, status_code, content=None):
@@ -86,6 +88,15 @@ def async_mock():
 @pytest.fixture
 def response_klass():
     return Response
+
+
+@pytest.fixture
+def certificates():
+    return {
+        "certificate": os.path.join(CERTIFICATES_DIR, "cert.pem"),
+        "key": os.path.join(CERTIFICATES_DIR, "key.pem"),
+        "password": "test",
+    }
 
 
 @pytest.fixture

@@ -1,32 +1,27 @@
 import os
 
 import pytest
-import requests_async as requests
 
-from schema_registry.client import SchemaRegistryClient, schema, utils
-from tests import data_gen
-
-
-@pytest.mark.asyncio
-async def test_context(client):
-    async with client as c:
-        parsed = schema.AvroSchema(data_gen.BASIC_SCHEMA)
-        schema_id = await c.register("test-basic-schema", parsed)
-        assert schema_id > 0
-        assert len(c.id_to_schema) == 1
+import httpx
+from schema_registry.client import SchemaRegistryClient, utils
 
 
-def test_cert_no_key():
-    with pytest.raises(ValueError):
+def test_invalid_cert():
+    with pytest.raises(FileNotFoundError):
         SchemaRegistryClient(url="https://127.0.0.1:65534", cert_location="/path/to/cert")
 
 
-def test_cert_with_key():
+def test_cert_with_key(certificates):
     client = SchemaRegistryClient(
-        url="https://127.0.0.1:65534", cert_location="/path/to/cert", key_location="/path/to/key"
+        url="https://127.0.0.1:65534",
+        cert_location=certificates["certificate"],
+        key_location=certificates["key"],
+        key_password=certificates["password"],
     )
 
-    assert ("/path/to/cert", "/path/to/key") == client.session.cert
+    assert client.conf[utils.SSL_CERTIFICATE_LOCATION] == certificates["certificate"]
+    assert client.conf[utils.SSL_KEY_LOCATION] == certificates["key"]
+    assert client.conf[utils.SSL_KEY_PASSWORD] == certificates["password"]
 
 
 def test_custom_headers():
@@ -46,7 +41,7 @@ async def test_override_headers(client, deployment_schema, response_klass, async
     subject = "test"
     override_header = {"custom-serialization": utils.HEADER_AVRO}
 
-    mock = async_mock(requests.sessions.Session, "request", returned_value=response_klass(200, content={"id": 1}))
+    mock = async_mock(httpx.AsyncClient, "request", returned_value=response_klass(200, content={"id": 1}))
 
     with mock:
         await client.register(subject, deployment_schema, headers=override_header)
@@ -58,17 +53,18 @@ async def test_override_headers(client, deployment_schema, response_klass, async
 
 
 def test_cert_path():
-    client = SchemaRegistryClient(url="https://127.0.0.1:65534", ca_location="/path/to/ca")
+    client = SchemaRegistryClient(url="https://127.0.0.1:65534", ca_location=True)
 
-    assert "/path/to/ca" == client.session.verify
+    assert client.conf[utils.SSL_CA_LOCATION]
 
 
-def test_init_with_dict():
+def test_init_with_dict(certificates):
     client = SchemaRegistryClient(
         {
             "url": "https://127.0.0.1:65534",
-            "ssl.certificate.location": "/path/to/cert",
-            "ssl.key.location": "/path/to/key",
+            "ssl.certificate.location": certificates["certificate"],
+            "ssl.key.location": certificates["key"],
+            "ssl.key.password": "test",
         }
     )
     assert "https://127.0.0.1:65534" == client.url_manager.url

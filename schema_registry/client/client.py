@@ -3,9 +3,9 @@ import logging
 import typing
 from collections import defaultdict
 
-import requests_async as requests
 from requests import utils as requests_utils
 
+import httpx
 from schema_registry.client import status, utils
 from schema_registry.client.errors import ClientError
 from schema_registry.client.paths import paths
@@ -33,24 +33,28 @@ class SchemaRegistryClient:
         ca_location: str = None,
         cert_location: str = None,
         key_location: str = None,
+        key_password: str = None,
         extra_headers: dict = None,
-    ) -> None:
+    ):
 
         if isinstance(url, str):
             conf = {
-                "url": url,
-                "ssl.ca.location": ca_location,
-                "ssl.certificate.location": cert_location,
-                "ssl.key.location": key_location,
+                utils.URL: url,
+                utils.SSL_CA_LOCATION: ca_location,
+                utils.SSL_CERTIFICATE_LOCATION: cert_location,
+                utils.SSL_KEY_LOCATION: key_location,
+                utils.SSL_KEY_PASSWORD: key_password,
             }
         else:
             conf = url
 
-        schema_server_url = conf.get("url", "")
+        self.conf = conf
+
+        schema_server_url = conf.get(utils.URL, "")
         self.url_manager = UrlManager(schema_server_url, paths)  # type: ignore
 
         self.extra_headers = extra_headers
-        self.session = self._create_session(conf)
+        self.session = self._create_session()
 
         # CACHE:
         # subj => { schema => id }
@@ -60,25 +64,21 @@ class SchemaRegistryClient:
         # subj => { schema => version }
         self.subject_to_schema_versions = defaultdict(dict)  # type: dict
 
-    async def __aenter__(self):
-        return self
+    def _create_session(self) -> httpx.AsyncClient:
+        """
+        Create a httpx client session
 
-    async def __aexit__(self, *args):
-        await self.close()
+        Returns:
+            httpx.AsyncClient
+        """
+        verify = self.conf.get(utils.SSL_CA_LOCATION, False)
+        certificate = self._configure_client_tls(self.conf)
+        auth = self._configure_basic_auth(self.conf)
 
-    async def close(self):
-        await self.session.close()
-
-    def _create_session(self, conf: dict) -> requests.Session:
-        session = requests.Session()
-        session.verify = conf.pop("ssl.ca.location", None)
-        session.cert = self._configure_client_tls(conf)
-        session.auth = self._configure_basic_auth(conf)
-
-        return session
+        return httpx.AsyncClient(verify=verify, cert=certificate, auth=auth)  # type: ignore
 
     @staticmethod
-    def _configure_basic_auth(conf: dict,) -> typing.Union[None, str, typing.Tuple[str, str]]:
+    def _configure_basic_auth(conf: dict) -> typing.Union[None, str, typing.Tuple[str, str]]:
         url = conf["url"]
         auth_provider = conf.pop("basic.auth.credentials.source", "URL").upper()
 
@@ -100,16 +100,22 @@ class SchemaRegistryClient:
         return auth
 
     @staticmethod
-    def _configure_client_tls(conf: dict,) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
-        cert = (conf.get("ssl.certificate.location"), conf.get("ssl.key.location"))
+    def _configure_client_tls(
+        conf: dict,
+    ) -> typing.Optional[typing.Union[str, typing.Tuple[str, str], typing.Tuple[str, str, str]]]:
+        certificate = conf.get(utils.SSL_CERTIFICATE_LOCATION)
 
-        # Both values can be None or no values can be None
-        if bool(cert[0]) != bool(cert[1]):
-            raise ValueError(
-                f"Both schema.registry.ssl.certificate.location and " f"schema.registry.ssl.key.location must be set"
-            )
+        if certificate:
+            key_path = conf.get(utils.SSL_KEY_LOCATION)
+            key_password = conf.get(utils.SSL_KEY_PASSWORD)
 
-        return cert
+            if key_path:
+                certificate = (certificate, key_path)
+
+                if key_password:
+                    certificate += (key_password,)
+
+        return certificate
 
     def prepare_headers(self, body: dict = None, headers: dict = None) -> dict:
         _headers = {"Accept": utils.ACCEPT_HEADERS}
@@ -118,7 +124,6 @@ class SchemaRegistryClient:
             _headers.update(self.extra_headers)
 
         if body:
-            _headers["Content-Length"] = str(len(body))
             _headers["Content-Type"] = utils.HEADERS
 
         if headers:
@@ -131,7 +136,9 @@ class SchemaRegistryClient:
             raise ClientError(f"Method {method} is invalid; valid methods include {utils.VALID_METHODS}")
 
         _headers = self.prepare_headers(body=body, headers=headers)
+
         response = await self.session.request(method, url, headers=_headers, json=body)
+        await self.session.aclose()
 
         try:
             return response.json(), response.status_code
@@ -139,13 +146,13 @@ class SchemaRegistryClient:
             return response.content, response.status_code
 
     @staticmethod
-    def _add_to_cache(cache: dict, subject: str, schema: AvroSchema, value: typing.Union[str, int]) -> None:
+    def _add_to_cache(cache: dict, subject: str, schema: AvroSchema, value: typing.Union[str, int]):
         sub_cache = cache[subject]
         sub_cache[schema] = value
 
     def _cache_schema(
         self, schema: AvroSchema, schema_id: int, subject: str = None, version: typing.Union[str, int] = None
-    ) -> None:
+    ):
         if schema_id in self.id_to_schema:
             schema = self.id_to_schema[schema_id]
         else:
@@ -219,7 +226,7 @@ class SchemaRegistryClient:
         if status.is_success(code):
             return result
 
-        raise ClientError("Unable to delete subject", http_code=code, server_traceback=result)
+        raise ClientError("Unable to get subject", http_code=code, server_traceback=result)
 
     async def delete_subject(self, subject: str, headers: dict = None) -> list:
         """
