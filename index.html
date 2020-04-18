@@ -257,8 +257,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-use-this-library" class="md-nav__link">
-    When use this library?
+  <a href="#client-api-serializer-and-schema-server-description" class="md-nav__link">
+    Client API, Serializer and Schema Server description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-this-library" class="md-nav__link">
+    When to use this library
   </a>
   
 </li>
@@ -364,8 +371,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-use-this-library" class="md-nav__link">
-    When use this library?
+  <a href="#client-api-serializer-and-schema-server-description" class="md-nav__link">
+    Client API, Serializer and Schema Server description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-this-library" class="md-nav__link">
+    When to use this library
   </a>
   
 </li>
@@ -403,21 +417,27 @@
 <a href="https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg"><img alt="Python Version" src="https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg" /></a></p>
 <p>Async Python Rest Client to interact against <a href="https://docs.confluent.io/current/schema-registry/index.html">schema-registry</a> confluent server to manage <a href="https://docs.oracle.com/database/nosql-12.1.3.1/GettingStartedGuide/avroschemas.html">Avro Schemas</a> resources.</p>
 <h2 id="requirements">Requirements</h2>
-<p>python 3.6+, fastavro, requests-async, aiofile</p>
+<p>python 3.6+, fastavro, requests-async, aiofiles</p>
 <h2 id="installation">Installation</h2>
 <div class="codehilite"><pre><span></span><code>pip install async-python-schema-registry-client
 </code></pre></div>
 
 
-<h2 id="when-use-this-library">When use this library?</h2>
-<p>Usually, we have a situacion like this:</p>
-<p><img alt="Confluent Architecture" src="img/confluent_architecture.png" /></p>
-<p>So, our producers/consumers have to serialize/deserialize messages every time that they send/receive from Kafka topics. In this picture, we can imagine a <code>Faust</code> application receiving messages (encoded with an Avro schema) and we want to deserialize them, so we can ask the <code>schema server</code> to do that for us. In this scenario, the <code>MessageSerializer</code> is perfect.</p>
-<p>Also, could be a use case that we would like to have an Application only to administrate <code>Avro Schemas</code> (register, update compatibilities, delete old schemas, etc.), so the <code>SchemaRegistryClient</code> is perfect.</p>
+<h2 id="client-api-serializer-and-schema-server-description">Client API, Serializer and Schema Server description</h2>
+<p><strong>Documentation</strong>: <a href="https://marcosschroh.github.io/async-python-schema-registry-client">https://marcosschroh.github.io/async-python-schema-registry-client.io</a></p>
+<h2 id="when-to-use-this-library">When to use this library</h2>
+<p>Usually, we have a situacion in which we have producers/consumers that serialize/deserialize events to send/receive from Kafka topics. In this picture, we can imagine a <code>Faust</code> or <code>Flink</code> application receiving/sending messages (encoded with an Avro schema)</p>
+<p><img alt="Confluent Architecture" src="docs/img/confluent_architecture.png" /></p>
+<p><code>Avro schemas</code> have to be maintained and also need to be used to encode/decode events. On those situation this library is convenient to use.</p>
+<p><em>Summary</em>:</p>
+<ul>
+<li>When we want to build an application to administrate <code>Avro Schemas</code> (register, update compatibilities, delete old schemas, etc.)</li>
+<li>When we have a process that needs to serialize/deserialize events to send/receive to/from a kafka topics</li>
+</ul>
 <h2 id="development">Development</h2>
 <p>The tests are run against the <code>Schema Server</code> using <code>docker compose</code>, so you will need
 <code>Docker</code> and <code>Docker Compose</code> installed.</p>
-<div class="codehilite"><pre><span></span><code>./scripts/test.sh
+<div class="codehilite"><pre><span></span><code>./scripts/test
 </code></pre></div>
 
 
