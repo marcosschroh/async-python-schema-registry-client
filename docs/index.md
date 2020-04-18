@@ -9,31 +9,38 @@ Async Python Rest Client to interact against [schema-registry](https://docs.conf
 
 ## Requirements
 
-python 3.6+, fastavro, requests-async, aiofile
+python 3.6+, fastavro, requests-async, aiofiles
 
 ## Installation
 
-```bash
+```sh
 pip install async-python-schema-registry-client
 ```
 
-## When use this library?
+## Client API, Serializer and Schema Server description
 
-Usually, we have a situacion like this:
+**Documentation**: [https://marcosschroh.github.io/async-python-schema-registry-client.io](https://marcosschroh.github.io/async-python-schema-registry-client)
 
-![Confluent Architecture](img/confluent_architecture.png)
+## When to use this library
 
-So, our producers/consumers have to serialize/deserialize messages every time that they send/receive from Kafka topics. In this picture, we can imagine a `Faust` application receiving messages (encoded with an Avro schema) and we want to deserialize them, so we can ask the `schema server` to do that for us. In this scenario, the `MessageSerializer` is perfect.
+Usually, we have a situacion in which we have producers/consumers that serialize/deserialize events to send/receive from Kafka topics. In this picture, we can imagine a `Faust` or `Flink` application receiving/sending messages (encoded with an Avro schema)
 
-Also, could be a use case that we would like to have an Application only to administrate `Avro Schemas` (register, update compatibilities, delete old schemas, etc.), so the `SchemaRegistryClient` is perfect.
+![Confluent Architecture](docs/img/confluent_architecture.png)
+
+`Avro schemas` have to be maintained and also need to be used to encode/decode events. On those situation this library is convenient to use.
+
+*Summary*:
+
+* When we want to build an application to administrate `Avro Schemas` (register, update compatibilities, delete old schemas, etc.)
+* When we have a process that needs to serialize/deserialize events to send/receive to/from a kafka topics
 
 ## Development
 
 The tests are run against the `Schema Server` using `docker compose`, so you will need
 `Docker` and `Docker Compose` installed.
 
-```bash
-./scripts/test.sh
+```sh
+./scripts/test
 ```
 
 Lint code:

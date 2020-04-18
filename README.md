@@ -21,15 +21,18 @@ pip install async-python-schema-registry-client
 
 **Documentation**: [https://marcosschroh.github.io/async-python-schema-registry-client.io](https://marcosschroh.github.io/async-python-schema-registry-client)
 
-## When use this library?
+## When to use this library
 
-Usually, we have a situacion like this:
+Usually, we have a situacion in which we have producers/consumers that serialize/deserialize events to send/receive from Kafka topics. In this picture, we can imagine a `Faust` or `Flink` application receiving/sending messages (encoded with an Avro schema)
 
 ![Confluent Architecture](docs/img/confluent_architecture.png)
 
-So, our producers/consumers have to serialize/deserialize messages every time that they send/receive from Kafka topics. In this picture, we can imagine a `Faust` application receiving messages (encoded with an Avro schema) and we want to deserialize them, so we can ask the `schema server` to do that for us. In this scenario, the `MessageSerializer` is perfect.
+`Avro schemas` have to be maintained and also need to be used to encode/decode events. On those situation this library is convenient to use.
 
-Also, could be a use case that we would like to have an Application only to administrate `Avro Schemas` (register, update compatibilities, delete old schemas, etc.), so the `SchemaRegistryClient` is perfect.
+*Summary*:
+
+* When we want to build an application to administrate `Avro Schemas` (register, update compatibilities, delete old schemas, etc.)
+* When we have a process that needs to serialize/deserialize events to send/receive to/from a kafka topics
 
 ## Development
 
