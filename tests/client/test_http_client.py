@@ -67,7 +67,7 @@ def test_init_with_dict(certificates):
             "ssl.key.password": "test",
         }
     )
-    assert "https://127.0.0.1:65534" == client.url_manager.url
+    assert "https://127.0.0.1:65534/" == client.url_manager.url
 
 
 def test_empty_url():
